@@ -69,8 +69,8 @@ namespace HumaneSociety
         public static Adoption[] GetPendingAdoptions()
         {
             //Line 66 in UserEmployee calls .ToList() on the return value of this method. Should we use yield return?
-            Adoption[] e = new Adoption[0];
-            return e;
+            var pendingAdoptions = db.Adoptions.Where(a => a.ApprovalStatus == "Pending").Select(a => new Adoption() { AdoptionId = a.AdoptionId, ClientId = a.ClientId, AnimalId = a.AnimalId, ApprovalStatus = a.ApprovalStatus, AdoptionFee = a.AdoptionFee, PaymentCollected = a.PaymentCollected }).ToArray();
+            return pendingAdoptions;
         }
 
         public static Room GetRoom(int animalID)
