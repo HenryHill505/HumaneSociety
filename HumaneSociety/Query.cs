@@ -103,7 +103,9 @@ namespace HumaneSociety
         public static void RemoveAnimal(Animal animal)
         {
             //240 UserEmployee
-
+            var animalToRemove = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Select(a => a).FirstOrDefault();
+            db.Animals.DeleteOnSubmit(animalToRemove);
+ 
         }
         
         public static void UpdateAdoption(bool GetBitData, Adoption adoption)
