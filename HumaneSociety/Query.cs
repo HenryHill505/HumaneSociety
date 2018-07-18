@@ -37,15 +37,16 @@ namespace HumaneSociety
         {
             //285 UserEmployee
             var employeeValues = db.Employees.Where(e => e.Email == email && e.EmployeeNumber == employeeNumber ).Select( e => new Employee {EmployeeId = e.EmployeeId, FirstName = e.FirstName, LastName = e.LastName, UserName = e.UserName, Password = e.Password, EmployeeNumber = e.EmployeeNumber, Email = e.Email }).First();
-            Employee employee = new Employee { EmployeeId = employeeValues.EmployeeId, FirstName = employeeValues.FirstName, LastName = employeeValues.LastName, UserName = employeeValues.UserName, Password = employeeValues.Password, EmployeeNumber = employeeValues.EmployeeNumber, Email = employeeValues.Email };
+            Employee employee = new Employee() { EmployeeId = employeeValues.EmployeeId, FirstName = employeeValues.FirstName, LastName = employeeValues.LastName, UserName = employeeValues.UserName, Password = employeeValues.Password, EmployeeNumber = employeeValues.EmployeeNumber, Email = employeeValues.Email };
             return employee;
         }
 
         public static Employee EmployeeLogin(string userName, string password)
         {
             //267 UserEmployee
-            Employee e = new Employee();
-            return e;
+            var employeeValues = db.Employees.Where(e => e.UserName == userName && e.Password == password).Select(e => new Employee { EmployeeId = e.EmployeeId, FirstName = e.FirstName, LastName = e.LastName, UserName = e.UserName, Password = e.Password, EmployeeNumber = e.EmployeeNumber, Email = e.Email }).First();
+            Employee employee = new Employee() { EmployeeId = employeeValues.EmployeeId, FirstName = employeeValues.FirstName, LastName = employeeValues.LastName, UserName = employeeValues.UserName, Password = employeeValues.Password, EmployeeNumber = employeeValues.EmployeeNumber, Email = employeeValues.Email };
+            return employee;
         }
 
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
@@ -56,8 +57,13 @@ namespace HumaneSociety
         public static DietPlan GetDietPlan()
         {
             //254 UserEmployee
-            DietPlan e = new DietPlan();
-            return e;
+            var dietPlans = db.DietPlans.Select(p => new DietPlan() {DietPlanId = p.DietPlanId, Name = p.Name, FoodType = p.FoodType, FoodAmountInCups = p.FoodAmountInCups }).ToArray();
+            for (int i = 0; i < dietPlans.Count(); i++)
+            {
+                Console.WriteLine($"{i}. {dietPlans[i].Name}");
+            }
+
+            return dietPlans[int.Parse(Console.ReadLine())];
         }
 
         public static Adoption[] GetPendingAdoptions()
