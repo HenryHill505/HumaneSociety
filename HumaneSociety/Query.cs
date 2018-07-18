@@ -84,9 +84,8 @@ namespace HumaneSociety
         public static AnimalShot[] GetShots(Animal animal)
         {
             //Called 162 in UserEmployee. Yield Return?
-            var shots = db.AnimalShots.Join(db.Shots, a => a.ShotId, s => s.ShotId, (a, s) => new { AnimalId = a.AnimalId, ShotId = a.ShotId, Name = s.Name, DateReceived = a.DateReceived }).Where(a => animal.AnimalId == a.AnimalId).Select(a => new AnimalShot { AnimalId = a.AnimalId, ShotId = a.ShotId, DateReceived = a.DateReceived, Shot = new Shot() { ShotId = a.ShotId, Name = a.Name } });
-            AnimalShot[] e = new AnimalShot[0];
-            return e;
+            var shots = db.AnimalShots.Join(db.Shots, a => a.ShotId, s => s.ShotId, (a, s) => new { AnimalId = a.AnimalId, ShotId = a.ShotId, Name = s.Name, DateReceived = a.DateReceived }).Where(a => animal.AnimalId == a.AnimalId).Select(a => new AnimalShot { AnimalId = a.AnimalId, ShotId = a.ShotId, DateReceived = a.DateReceived, Shot = new Shot() { ShotId = a.ShotId, Name = a.Name } }).ToArray();
+            return shots;
         }
 
         public static Species GetSpecies()
@@ -104,6 +103,7 @@ namespace HumaneSociety
         public static void RemoveAnimal(Animal animal)
         {
             //240 UserEmployee
+
         }
         
         public static void UpdateAdoption(bool GetBitData, Adoption adoption)
