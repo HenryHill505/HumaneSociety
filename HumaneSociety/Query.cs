@@ -8,6 +8,8 @@ namespace HumaneSociety
 {
     public static class Query
     {
+        static HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+
         public static void AddAnimal(Animal animal)
         {
             //255 UserEmployee
@@ -20,7 +22,15 @@ namespace HumaneSociety
 
         public static bool CheckEmployeeUserNameExist(string username)
         {
-            //321 UserEmployee
+            var existingEmployeeID = db.Employees.Where(e => e.UserName == username).Select(e => e.EmployeeId);
+            if (existingEmployeeID != null)
+            {
+                return true;
+            } 
+            else
+            {
+                return false;
+            }
         }
 
         public static Employee RetrieveEmployeeUser(string email, int employeeNunber)
