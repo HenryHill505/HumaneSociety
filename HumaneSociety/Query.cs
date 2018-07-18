@@ -33,10 +33,10 @@ namespace HumaneSociety
             }
         }
 
-        public static Employee RetrieveEmployeeUser(string email, int employeeNunber)
+        public static Employee RetrieveEmployeeUser(string email, int employeeNumber)
         {
             //285 UserEmployee
-            var employeeValues = db.Employees.Where(e => e.Email == email).Select( e => new Employee {EmployeeId = e.EmployeeId, FirstName = e.FirstName, LastName = e.LastName, UserName = e.UserName, Password = e.Password, EmployeeNumber = e.EmployeeNumber, Email = e.Email }).First();
+            var employeeValues = db.Employees.Where(e => e.Email == email && e.EmployeeNumber == employeeNumber ).Select( e => new Employee {EmployeeId = e.EmployeeId, FirstName = e.FirstName, LastName = e.LastName, UserName = e.UserName, Password = e.Password, EmployeeNumber = e.EmployeeNumber, Email = e.Email }).First();
             Employee employee = new Employee { EmployeeId = employeeValues.EmployeeId, FirstName = employeeValues.FirstName, LastName = employeeValues.LastName, UserName = employeeValues.UserName, Password = employeeValues.Password, EmployeeNumber = employeeValues.EmployeeNumber, Email = employeeValues.Email };
             return employee;
         }
