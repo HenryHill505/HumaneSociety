@@ -59,10 +59,10 @@ namespace HumaneSociety
             return e;
         }
 
-        public static Adoption GetPendingAdoptions()
+        public static Adoption[] GetPendingAdoptions()
         {
             //Line 66 in UserEmployee calls .ToList() on the return value of this method. Should we use yield return?
-            Adoption e = new Adoption();
+            Adoption[] e = new Adoption[0];
             return e;
         }
 
@@ -73,10 +73,10 @@ namespace HumaneSociety
             return e;
         }
 
-        public static AnimalShot GetShots(Animal animal)
+        public static AnimalShot[] GetShots(Animal animal)
         {
             //Called 162 in UserEmployee. Yield Return?
-            AnimalShot e = new AnimalShot();
+            AnimalShot[] e = new AnimalShot[0];
             return e;
         }
 
@@ -106,20 +106,33 @@ namespace HumaneSociety
 
         public static Client GetClient(string username, string password)
         {
-            Client e = new Client();
-            return e;
+            var query = db.Clients.Where(c => c.UserName == username && c.Password == password);
+
+            foreach(var client in query)
+            {
+                return client;
+            }
+
+            return new Client();
         }
 
         public static Adoption[] GetUserAdoptionStatus(Client client)
         {
-            Adoption[] e = new Adoption[0];
-            return e;
+            Adoption[] clientAdoptions = client.Adoptions.ToArray();
+            
+            return clientAdoptions;
         }
 
         public static Animal GetAnimalByID(int id)
         {
-            Animal e = new Animal();
-            return e;
+            var query = db.Animals.Where(a => a.AnimalId == id);
+
+            foreach(var animal in query)
+            {
+                return animal;
+            }
+
+            return new Animal();
         }
 
         public static void Adopt(Animal animal, Client client)
@@ -129,14 +142,17 @@ namespace HumaneSociety
 
         public static Client[] RetrieveClients()
         {
-            Client[] e = new Client[0];
-            return e;
+            var query = db.Clients.ToArray();
+
+            return query;
         }
 
         public static USState[] GetStates()
         {
-            USState[] e = new USState[0];
-            return e;
+            // HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            var query = db.USStates.ToArray();
+            
+            return query;
         }
 
         public static void AddNewClient(string firstName, string lastName, string username, string password, string email, string streetAddress, int zipCode, int state)
