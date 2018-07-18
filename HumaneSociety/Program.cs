@@ -18,7 +18,7 @@ namespace HumaneSociety
             }
 
             PointOfEntry.Run();
-            //HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
         }
     }
 }
