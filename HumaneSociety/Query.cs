@@ -166,34 +166,80 @@ namespace HumaneSociety
 
         public static void AddNewClient(string firstName, string lastName, string username, string password, string email, string streetAddress, int zipCode, int state)
         {
+            Client client = new Client();
+            client.FirstName = firstName;
+            client.LastName = lastName;
+            client.UserName = username;
+            client.Password = password;
+            client.Email = email;
+            client.Address.AddressLine1 = streetAddress;
+            client.Address.Zipcode = zipCode;
+            client.Address.USStateId = state;
+
+            db.Clients.InsertOnSubmit(client);
+
+            db.SubmitChanges();
 
         }
 
         public static void updateClient(Client client)
         {
+            var query = db.Clients.Where(c => c.ClientId == client.ClientId).ToArray();
 
+            for(int i = 0; i < query.Length; i++)
+            {
+                query[i] = client;
+            }
+
+            db.SubmitChanges();
         }
 
         public static void UpdateUsername(Client client)
         {
+            var query = db.Clients.Where(c => c.ClientId == client.ClientId);
 
+            foreach (Client clientGiven in query)
+            {
+                clientGiven.UserName = client.UserName;
+            }
+
+            db.SubmitChanges();
         }
 
         public static void UpdateEmail(Client client)
         {
+            var query = db.Clients.Where(c => c.ClientId == client.ClientId);
 
+            foreach (Client clientGiven in query)
+            {
+                clientGiven.Email = client.Email;
+            }
+
+            db.SubmitChanges();
         }
 
         public static void UpdateAddress(Client client)
         {
+            var query = db.Clients.Where(c => c.ClientId == client.ClientId);
 
+            foreach (Client clientGiven in query)
+            {
+                clientGiven.Address = client.Address;
+            }
+
+            db.SubmitChanges();
         }
 
         public static void UpdateFirstName(Client client)
         {
             var query = db.Clients.Where(c => c.ClientId == client.ClientId);
 
+            foreach(Client clientGiven in query)
+            {
+                clientGiven.FirstName = client.FirstName;
+            }
 
+            db.SubmitChanges();
         }
 
         public static void UpdateLastName(Client client)

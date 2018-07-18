@@ -4,7 +4,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace HumaneSocietyUnitTest
 {
-<<<<<<< HEAD
     [TestClass]
     public class UnitTest1
     {
@@ -46,21 +45,4 @@ namespace HumaneSocietyUnitTest
         //Assert
         }
     }
-=======
-    //[TestClass]
-    //public class UnitTest1
-    //{
-    //    [TestMethod]
-    //    public void CheckEmployeeUserNameExists_UsernameDoesNotExist_ReturnFalse()
-    //    {
-    //        //Arrange
-    //        string testname = "Henry";
-    //        bool result;
-    //        //Act
-    //        result = Query.CheckEmployeeUserNameExist(testname);
-    //        //Assert
-    //        Assert.AreEqual(false, result);
-    //    }
-    //}
->>>>>>> 1939007cc3a6ddfb8b25186d4e9460f61ad27860
 }
