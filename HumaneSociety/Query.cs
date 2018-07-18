@@ -8,6 +8,8 @@ namespace HumaneSociety
 {
     public static class Query
     {
+        static HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+
         public static void AddAnimal(Animal animal)
         {
             //255 UserEmployee
@@ -83,16 +85,22 @@ namespace HumaneSociety
         public static Client GetClient(string username, string password)
         {
 
+
+            return new Client();
         }
 
         public static Adoption[] GetUserAdoptionStatus(Client client)
         {
 
+
+            return new Adoption[5];
         }
 
         public static Animal GetAnimalByID(int id)
         {
 
+
+            return new Animal();
         }
 
         public static void Adopt(Animal animal, Client client)
@@ -103,11 +111,15 @@ namespace HumaneSociety
         public static Client[] RetrieveClients()
         {
 
+
+            return new Client[5];
         }
 
         public static USState[] GetStates()
         {
 
+
+            return new USState[5];
         }
 
         public static void AddNewClient(string firstName, string lastName, string username, string password, string email, string streetAddress, int zipCode, int state)
@@ -137,12 +149,23 @@ namespace HumaneSociety
 
         public static void UpdateFirstName(Client client)
         {
+            var query = db.Clients.Where(c => c.ClientId == client.ClientId);
+
 
         }
 
         public static void UpdateLastName(Client client)
         {
+            var query = from c in db.Clients
+                        where c.ClientId == client.ClientId
+                        select c;
 
+            foreach(Client clientGiven in query)
+            {
+                clientGiven.LastName = client.LastName;
+            }
+
+            db.SubmitChanges();
         }
 
         public static void RunEmployeeQueries(Employee employee, string operation)
