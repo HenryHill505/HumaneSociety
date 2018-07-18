@@ -166,12 +166,23 @@ namespace HumaneSociety
 
         public static void UpdateFirstName(Client client)
         {
+            var query = db.Clients.Where(c => c.ClientId == client.ClientId);
+
 
         }
 
         public static void UpdateLastName(Client client)
         {
+            var query = from c in db.Clients
+                        where c.ClientId == client.ClientId
+                        select c;
 
+            foreach(Client clientGiven in query)
+            {
+                clientGiven.LastName = client.LastName;
+            }
+
+            db.SubmitChanges();
         }
 
         public static void RunEmployeeQueries(Employee employee, string operation)
