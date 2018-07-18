@@ -59,10 +59,10 @@ namespace HumaneSociety
             return e;
         }
 
-        public static Adoption GetPendingAdoptions()
+        public static Adoption[] GetPendingAdoptions()
         {
             //Line 66 in UserEmployee calls .ToList() on the return value of this method. Should we use yield return?
-            Adoption e = new Adoption();
+            Adoption[] e = new Adoption[0];
             return e;
         }
 
@@ -73,10 +73,10 @@ namespace HumaneSociety
             return e;
         }
 
-        public static AnimalShot GetShots(Animal animal)
+        public static AnimalShot[] GetShots(Animal animal)
         {
             //Called 162 in UserEmployee. Yield Return?
-            AnimalShot e = new AnimalShot();
+            AnimalShot[] e = new AnimalShot[0];
             return e;
         }
 
