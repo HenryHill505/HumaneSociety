@@ -268,23 +268,29 @@ namespace HumaneSociety
             db.SubmitChanges();
         }
 
+        public delegate void EmployeeToVoidFunction(Employee employee);
+
         public static void RunEmployeeQueries(Employee employee, string operation)
         {
+            EmployeeToVoidFunction employeeCrudFunctions = new EmployeeToVoidFunction(ReadEmployee);
+
             switch (operation)
             {
                 case "create":
-                    CreateEmployee(employee);
+                    employeeCrudFunctions = CreateEmployee;
                     break;
                 case "read":
-                    ReadEmployee(employee);
+                    employeeCrudFunctions = ReadEmployee;
                     break;
                 case "update":
-                    UpdateEmployee(employee);
+                    employeeCrudFunctions = UpdateEmployee;
                     break;
                 case "delete":
+                    employeeCrudFunctions = DeleteEmployee;
                     break;
             }
 
+            employeeCrudFunctions(employee);
         }
 
         private static void CreateEmployee(Employee employee)
