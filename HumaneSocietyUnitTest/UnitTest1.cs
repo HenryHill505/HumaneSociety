@@ -18,5 +18,31 @@ namespace HumaneSocietyUnitTest
             //Assert
             Assert.AreEqual(false, result);
         }
+
+        [TestMethod]
+        public void CheckEmployeeUserNameExists_UsernameDoesExist_ReturnTrue()
+        {
+            //Arrange
+            string testname = "";
+            bool result;
+            //Act
+            result = Query.CheckEmployeeUserNameExist(testname);
+            //Assert
+            Assert.AreEqual(true, result);
+        }
+
+        [TestMethod]
+
+        public void RetrieveEmployeeUser_EmployeeExists_ReturnEmployee()
+        {
+        //Arrange
+        string email = "";
+        int employeNumber = 0;
+
+        //Act
+        Query.RetrieveEmployeeUser(email, employeNumber);
+        
+        //Assert
+        }
     }
 }
