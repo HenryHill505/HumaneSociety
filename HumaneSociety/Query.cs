@@ -83,6 +83,7 @@ namespace HumaneSociety
         public static AnimalShot[] GetShots(Animal animal)
         {
             //Called 162 in UserEmployee. Yield Return?
+            //var shots = db.AnimalShots
             AnimalShot[] e = new AnimalShot[0];
             return e;
         }
