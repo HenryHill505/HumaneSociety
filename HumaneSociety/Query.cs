@@ -84,7 +84,7 @@ namespace HumaneSociety
         public static AnimalShot[] GetShots(Animal animal)
         {
             //Called 162 in UserEmployee. Yield Return?
-            //var shots = db.AnimalShots
+            var shots = db.AnimalShots.Join(db.Shots, a => a.ShotId, s => s.ShotId, (a, s) => new { AnimalId = a.AnimalId, ShotId = a.ShotId, Name = s.Name, DateReceived = a.DateReceived }).Where(a => animal.AnimalId == a.AnimalId).Select(a => new AnimalShot { AnimalId = a.AnimalId, ShotId = a.ShotId, DateReceived = a.DateReceived, Shot = new Shot() { ShotId = a.ShotId, Name = a.Name } });
             AnimalShot[] e = new AnimalShot[0];
             return e;
         }
@@ -92,8 +92,13 @@ namespace HumaneSociety
         public static Species GetSpecies()
         {
             //247 UserEmployee
-            Species e = new Species();
-            return e;
+            var species = db.Species.Select(s => new Species { SpeciesId = s.SpeciesId, Name = s.Name }).ToArray();
+            for (int i = 0; i < species.Count(); i++)
+            {
+                Console.WriteLine($"{i}. {species[i].Name}");
+            }
+
+            return species[int.Parse(Console.ReadLine())];
         }
 
         public static void RemoveAnimal(Animal animal)
