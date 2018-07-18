@@ -146,7 +146,19 @@ namespace HumaneSociety
 
         public static void Adopt(Animal animal, Client client)
         {
+            var clientQuery = db.Clients.Where(c => c.ClientId == client.ClientId);
+            var animalQuery = db.Animals.Where(a => a.AnimalId == animal.AnimalId);
 
+            foreach(Client clientGiven in clientQuery)
+            {
+                foreach(Animal animalGiven in animalQuery)
+                {
+                    Adoption newAdoption = new Adoption();
+                    newAdoption.Animal = animalGiven;
+                    newAdoption.Client = clientGiven;
+                    clientGiven.Adoptions.Add(newAdoption);
+                }
+            }
         }
 
         public static Client[] RetrieveClients()
@@ -258,7 +270,77 @@ namespace HumaneSociety
 
         public static void RunEmployeeQueries(Employee employee, string operation)
         {
+            switch (operation)
+            {
+                case "create":
+                    CreateEmployee(employee);
+                    break;
+                case "read":
+                    ReadEmployee(employee);
+                    break;
+                case "update":
+                    UpdateEmployee(employee);
+                    break;
+                case "delete":
+                    break;
+            }
 
+        }
+
+        private static void CreateEmployee(Employee employee)
+        {
+            db.Employees.InsertOnSubmit(employee);
+
+            db.SubmitChanges();
+        }
+
+        private static void ReadEmployee(Employee employee)
+        {
+            var query = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId);
+
+            foreach(Employee employeeFound in query)
+            {
+                Console.WriteLine(employeeFound.FirstName + " " + employeeFound.LastName);
+                Console.WriteLine("Employee #" + employeeFound.EmployeeNumber);
+                Console.WriteLine("Employee Username: " + employeeFound.UserName);
+                Console.WriteLine("Employee Email: " + employeeFound.Email);
+                Console.WriteLine("Employee Animals: " + employeeFound.Animals);
+            }
+        }
+
+        private static void UpdateEmployee(Employee employee)
+        {
+            var query = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId);
+
+            foreach (Employee employeeFound in query)
+            {
+                employeeFound.FirstName = employee.FirstName;
+                employeeFound.LastName = employee.LastName;
+                employeeFound.UserName = employee.UserName;
+                employeeFound.Email = employee.Email;
+                employeeFound.Animals = employee.Animals;
+            }
+
+            db.SubmitChanges();
+        }
+
+        private static void DeleteEmployee(Employee employee)
+        {
+            var query = db.Employees.Where(e => e.EmployeeId == employee.EmployeeId);
+
+            foreach (Employee employeeFound in query)
+            {
+                db.Employees.DeleteOnSubmit(employeeFound);
+            }
+
+            try
+            {
+                db.SubmitChanges();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Exception caught: " + e.Message);
+            }
         }
     }
 }
