@@ -22,17 +22,29 @@ namespace HumaneSociety
 
         public static bool CheckEmployeeUserNameExist(string username)
         {
-            //321 UserEmployee
+            var existingEmployeeID = db.Employees.Where(e => e.UserName == username).Select(e => e.EmployeeId);
+            if (existingEmployeeID != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public static Employee RetrieveEmployeeUser(string email, int employeeNunber)
         {
             //285 UserEmployee
+            Employee e = new Employee();
+            return e;
         }
 
         public static Employee EmployeeLogin(string userName, string password)
         {
             //267 UserEmployee
+            Employee e = new Employee();
+            return e;
         }
 
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
@@ -43,26 +55,36 @@ namespace HumaneSociety
         public static DietPlan GetDietPlan()
         {
             //254 UserEmployee
+            DietPlan e = new DietPlan();
+            return e;
         }
 
         public static Adoption GetPendingAdoptions()
         {
             //Line 66 in UserEmployee calls .ToList() on the return value of this method. Should we use yield return?
+            Adoption e = new Adoption();
+            return e;
         }
 
         public static Room GetRoom(int animalID)
         {
             //133 UserInterface
+            Room e = new Room();
+            return e;
         }
 
         public static AnimalShot GetShots(Animal animal)
         {
             //Called 162 in UserEmployee. Yield Return?
+            AnimalShot e = new AnimalShot();
+            return e;
         }
 
         public static Species GetSpecies()
         {
             //247 UserEmployee
+            Species e = new Species();
+            return e;
         }
 
         public static void RemoveAnimal(Animal animal)
@@ -84,23 +106,20 @@ namespace HumaneSociety
 
         public static Client GetClient(string username, string password)
         {
-
-
-            return new Client();
+            Client e = new Client();
+            return e;
         }
 
         public static Adoption[] GetUserAdoptionStatus(Client client)
         {
-
-
-            return new Adoption[5];
+            Adoption[] e = new Adoption[0];
+            return e;
         }
 
         public static Animal GetAnimalByID(int id)
         {
-
-
-            return new Animal();
+            Animal e = new Animal();
+            return e;
         }
 
         public static void Adopt(Animal animal, Client client)
@@ -110,16 +129,14 @@ namespace HumaneSociety
 
         public static Client[] RetrieveClients()
         {
-
-
-            return new Client[5];
+            Client[] e = new Client[0];
+            return e;
         }
 
         public static USState[] GetStates()
         {
-
-
-            return new USState[5];
+            USState[] e = new USState[0];
+            return e;
         }
 
         public static void AddNewClient(string firstName, string lastName, string username, string password, string email, string streetAddress, int zipCode, int state)
