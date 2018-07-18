@@ -13,6 +13,7 @@ namespace HumaneSociety
         public static void AddAnimal(Animal animal)
         {
             //255 UserEmployee
+            db.Animals.InsertOnSubmit(animal);
         }
 
         public static void AddUsernameAndPassword(Employee employee)
@@ -116,6 +117,7 @@ namespace HumaneSociety
         public static void UpdateShot(string shotType, Animal animal)
         {
             //171, 178 UserEmployee
+            
         }
       
 
