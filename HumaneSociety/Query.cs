@@ -13,11 +13,15 @@ namespace HumaneSociety
         public static void AddAnimal(Animal animal)
         {
             //255 UserEmployee
+            db.Animals.InsertOnSubmit(animal);
         }
 
         public static void AddUsernameAndPassword(Employee employee)
         {
             //308 UserEmployee
+            var employeeToUpdate = db.Employees.Where(e => employee.EmployeeId == e.EmployeeId).Select(e => e).FirstOrDefault();
+            employeeToUpdate.UserName = employee.UserName;
+            employeeToUpdate.Password = employee.Password;
         }
 
         public static bool CheckEmployeeUserNameExist(string username)
@@ -84,21 +88,28 @@ namespace HumaneSociety
         public static AnimalShot[] GetShots(Animal animal)
         {
             //Called 162 in UserEmployee. Yield Return?
-            //var shots = db.AnimalShots
-            AnimalShot[] e = new AnimalShot[0];
-            return e;
+            var shots = db.AnimalShots.Join(db.Shots, a => a.ShotId, s => s.ShotId, (a, s) => new { AnimalId = a.AnimalId, ShotId = a.ShotId, Name = s.Name, DateReceived = a.DateReceived }).Where(a => animal.AnimalId == a.AnimalId).Select(a => new AnimalShot { AnimalId = a.AnimalId, ShotId = a.ShotId, DateReceived = a.DateReceived, Shot = new Shot() { ShotId = a.ShotId, Name = a.Name } }).ToArray();
+            return shots;
         }
 
         public static Species GetSpecies()
         {
             //247 UserEmployee
-            Species e = new Species();
-            return e;
+            var species = db.Species.Select(s => new Species { SpeciesId = s.SpeciesId, Name = s.Name }).ToArray();
+            for (int i = 0; i < species.Count(); i++)
+            {
+                Console.WriteLine($"{i}. {species[i].Name}");
+            }
+
+            return species[int.Parse(Console.ReadLine())];
         }
 
         public static void RemoveAnimal(Animal animal)
         {
             //240 UserEmployee
+            var animalToRemove = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Select(a => a).FirstOrDefault();
+            db.Animals.DeleteOnSubmit(animalToRemove);
+ 
         }
         
         public static void UpdateAdoption(bool GetBitData, Adoption adoption)
@@ -109,6 +120,7 @@ namespace HumaneSociety
         public static void UpdateShot(string shotType, Animal animal)
         {
             //171, 178 UserEmployee
+            
         }
       
 
