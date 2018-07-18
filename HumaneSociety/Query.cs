@@ -23,7 +23,7 @@ namespace HumaneSociety
         public static bool CheckEmployeeUserNameExist(string username)
         {
             var existingEmployeeID = db.Employees.Where(e => e.UserName == username).Select(e => e.EmployeeId);
-            if (existingEmployeeID != null)
+            if (existingEmployeeID.Count() > 0)
             {
                 return true;
             }
