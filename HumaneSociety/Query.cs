@@ -126,16 +126,20 @@ namespace HumaneSociety
             return shots;
         }
 
-        public static Species GetSpecies()
+        public static Species GetSpecies(string speciesGiven)
         {
             //247 UserEmployee
             var species = db.Species.Select(s => new Species { SpeciesId = s.SpeciesId, Name = s.Name }).ToArray();
+            int indexChosen = 0;
+
             for (int i = 0; i < species.Count(); i++)
             {
-                Console.WriteLine($"{i}. {species[i].Name}");
+                if(species[i].Name == speciesGiven)
+                {
+                    indexChosen = i;
+                }
             }
-
-            return species[int.Parse(Console.ReadLine())];
+            return species[indexChosen];
         }
 
         public static void RemoveAnimal(Animal animal)
@@ -183,7 +187,7 @@ namespace HumaneSociety
 
         public static Adoption[] GetUserAdoptionStatus(Client client)
         {
-            Adoption[] clientAdoptions = client.Adoptions.ToArray();
+            Adoption[] clientAdoptions = client.Adoptions.Where(a => a.ApprovalStatus == "Pending").ToArray();
             
             return clientAdoptions;
         }
