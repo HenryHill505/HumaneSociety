@@ -165,8 +165,6 @@ namespace HumaneSociety
             AnimalShot newShot = new AnimalShot() { AnimalId = animal.AnimalId, DateReceived = DateTime.Today, ShotId = db.Shots.Where(s => s.Name == shotType).Select(s => s.ShotId).FirstOrDefault() };
             db.AnimalShots.InsertOnSubmit(newShot);
         }
-      
-
 
         public static Client GetClient(string username, string password)
         {
