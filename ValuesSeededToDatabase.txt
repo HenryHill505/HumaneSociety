@@ -27,6 +27,7 @@ INSERT INTO Rooms VALUES(NULL);
 INSERT INTO Rooms VALUES(NULL);
 INSERT INTO Rooms VALUES(NULL);
 
+INSERT INTO Employees VALUES('Zack','Scherrer','zscherrer','password',1,'zscherrer@carthage.edu');
 INSERT INTO Shots VALUES('Rabies');
 INSERT INTO Shots VALUES('Tetanus');
 INSERT INTO Shots VALUES('Bird Flu');

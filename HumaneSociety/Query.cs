@@ -107,7 +107,7 @@ namespace HumaneSociety
         {
             //Line 66 in UserEmployee calls .ToList() on the return value of this method. Should we use yield return?
 
-            var pendingAdoptions = db.Adoptions.Where(a => a.ApprovalStatus == "Pending").Select(a => new Adoption() { AdoptionId = a.AdoptionId, ClientId = a.ClientId, AnimalId = a.AnimalId, ApprovalStatus = a.ApprovalStatus, AdoptionFee = a.AdoptionFee, PaymentCollected = a.PaymentCollected }).ToArray();
+            var pendingAdoptions = db.Adoptions.Where(a => a.ApprovalStatus == "Pending").ToArray();
             return pendingAdoptions;
         }
 
@@ -157,6 +157,8 @@ namespace HumaneSociety
             if (isApproved)
             {
                 adoptionToUpdate.ApprovalStatus = "Approved";
+                UserInterface.money += Convert.ToInt32(adoptionToUpdate.AdoptionFee);
+                adoptionToUpdate.PaymentCollected = true;
             }
             else
             {
@@ -216,6 +218,8 @@ namespace HumaneSociety
                     Adoption newAdoption = new Adoption();
                     newAdoption.Animal = animalGiven;
                     newAdoption.Client = clientGiven;
+                    newAdoption.ApprovalStatus = "Pending";
+                    newAdoption.AdoptionFee = 75;
                     clientGiven.Adoptions.Add(newAdoption);
                 }
             }

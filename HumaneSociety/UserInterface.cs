@@ -8,6 +8,8 @@ namespace HumaneSociety
 {
     public static class UserInterface
     {
+        public static int money = 0;
+
         public static void DisplayUserOptions(List<string> options)
         {
             foreach(string option in options)
