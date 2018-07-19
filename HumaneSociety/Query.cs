@@ -157,6 +157,8 @@ namespace HumaneSociety
             if (isApproved)
             {
                 adoptionToUpdate.ApprovalStatus = "Approved";
+                UserInterface.money += Convert.ToInt32(adoptionToUpdate.AdoptionFee);
+                adoptionToUpdate.PaymentCollected = true;
             }
             else
             {
