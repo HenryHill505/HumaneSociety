@@ -42,7 +42,20 @@ namespace HumaneSocietyUnitTest
         //Act
         Employee employee =  Query.RetrieveEmployeeUser(email, employeeNumber);
             //Assert
-            Assert.IsNotNull(employee);
+        Assert.IsNotNull(employee);
+        }
+
+        [TestMethod]
+
+        public void RetrieveEmployeeUser_EmployeeDoesNotExist_ReturnNull()
+        {
+            //Arrange
+            string email = "schmadam@test.com";
+            int employeeNumber = 999;
+            //Act
+            Employee employee = Query.RetrieveEmployeeUser(email, employeeNumber);
+            //Assert
+            Assert.IsNull(employee);
         }
     }
 }

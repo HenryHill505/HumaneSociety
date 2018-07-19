@@ -43,7 +43,7 @@ namespace HumaneSociety
         public static Employee RetrieveEmployeeUser(string email, int employeeNumber)
         {
             //285 UserEmployee
-            var employee = db.Employees.Where(e => e.Email == email && e.EmployeeNumber == employeeNumber).First();
+            var employee = db.Employees.Where(e => e.Email == email && e.EmployeeNumber == employeeNumber).FirstOrDefault();
             return employee;
         }
 
