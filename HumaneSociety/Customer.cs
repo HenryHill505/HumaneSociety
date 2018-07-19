@@ -85,6 +85,7 @@ namespace HumaneSociety
             if (pendingAdoptions.Count == 0)
             {
                 UserInterface.DisplayUserOptions("No adoptions currently pending");
+                Console.ReadLine();
             }
             else
             {
@@ -111,6 +112,7 @@ namespace HumaneSociety
             {
                 Query.Adopt(animal, client);
                 UserInterface.DisplayUserOptions("Adoption request sent we will hold $75 adoption fee until processed");
+                Console.ReadLine();
             }
         }
 

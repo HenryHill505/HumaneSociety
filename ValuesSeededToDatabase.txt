@@ -28,6 +28,9 @@ INSERT INTO Rooms VALUES(NULL);
 INSERT INTO Rooms VALUES(NULL);
 
 INSERT INTO Employees VALUES('Zack','Scherrer','zscherrer','password',1,'zscherrer@carthage.edu');
+
+INSERT INTO Addresses VALUES ('3720 Forest Heights Dr.', NULL, 54701, 1);
+INSERT INTO Clients VALUES('Zack','Scherrer','a','a',1,'zscherrer@carthage.edu', 50000, 0, 1);
 INSERT INTO Shots VALUES('Rabies');
 INSERT INTO Shots VALUES('Tetanus');
 INSERT INTO Shots VALUES('Bird Flu');

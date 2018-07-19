@@ -190,7 +190,7 @@ namespace HumaneSociety
 
         public static Adoption[] GetUserAdoptionStatus(Client client)
         {
-            Adoption[] clientAdoptions = client.Adoptions.Where(a => a.ApprovalStatus == "Pending").ToArray();
+            Adoption[] clientAdoptions = client.Adoptions.ToArray();
             
             return clientAdoptions;
         }
@@ -222,6 +222,8 @@ namespace HumaneSociety
                     newAdoption.ApprovalStatus = "Pending";
                     newAdoption.AdoptionFee = 75;
                     clientGiven.Adoptions.Add(newAdoption);
+
+                    db.SubmitChanges();
                 }
             }
         }
