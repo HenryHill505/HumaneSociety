@@ -128,6 +128,8 @@ namespace HumaneSociety
                     isFinished = true;
                     continue;
                 }
+                HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+                animal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
                 RunCheckMenuInput(input, animal);
             }
         }
@@ -194,6 +196,7 @@ namespace HumaneSociety
                 {
                     Query.EnterUpdate(animal, updates);
                     isFinishedUpdating = true;
+                    
                 }
                 else
                 {
