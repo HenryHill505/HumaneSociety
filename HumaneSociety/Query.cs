@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace HumaneSociety
 {
@@ -358,6 +359,67 @@ namespace HumaneSociety
             catch(Exception e)
             {
                 Console.WriteLine("Exception caught: " + e.Message);
+            }
+        }
+
+        public static void ImportAnimalsFromCSV(string filename)
+        {
+            var query = File.ReadAllLines(filename).Select(l => l.Split(',').Where(m => m != null));
+            
+            foreach (var animal in query)
+            {
+                List<int?> intData = new List<int?>();
+                List<string> stringData = new List<string>();
+
+                foreach (var data in animal)
+                {
+                    bool isParsable = int.TryParse(data, out int value);
+                    if (isParsable)
+                    {
+                        intData.Add(value);
+                    }
+                    else
+                    {
+                        stringData.Add(data);
+                    }
+                }
+
+                Animal animalToAdd = CreateAnimal(intData, stringData);
+
+                AddAnimal(animalToAdd);
+            }
+
+            db.SubmitChanges();
+        }
+
+        private static Animal CreateAnimal(List<int?> intData, List<string> stringData)
+        {
+            Animal animalToAdd = new Animal();
+
+            animalToAdd.Name = stringData[0];
+            animalToAdd.SpeciesId = intData[1];
+            animalToAdd.Weight = intData[2];
+            animalToAdd.Age = intData[3];
+            animalToAdd.DietPlanId = intData[4];
+            animalToAdd.Demeanor = stringData[1];
+            animalToAdd.KidFriendly = ConvertIntToBool(intData[5]);
+            animalToAdd.PetFriendly = ConvertIntToBool(intData[6]);
+            animalToAdd.Gender = stringData[2];
+            animalToAdd.AdoptionStatus = stringData[3];
+
+            return animalToAdd;
+        }
+
+        private static bool? ConvertIntToBool(int? convertible)
+        {
+            switch (convertible)
+            {
+                case 0:
+                    return false;
+                case 1:
+                    return true;
+                default:
+                    return null;
             }
         }
     }

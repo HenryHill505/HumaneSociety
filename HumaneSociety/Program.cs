@@ -10,15 +10,11 @@ namespace HumaneSociety
     {
         static void Main(string[] args)
         {
-            USState[] states = Query.GetStates();
+            string filename = "HumaneSocietyAnimals.csv";
 
-            foreach (var state in states)
-            {
-                Console.WriteLine(state.Abbreviation);
-            }
+            Query.ImportAnimalsFromCSV(filename);
 
             PointOfEntry.Run();
-            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
         }
     }
 }
