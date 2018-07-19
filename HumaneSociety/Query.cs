@@ -90,18 +90,13 @@ namespace HumaneSociety
                 }
             }
             db.SubmitChanges();
-            //animal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
         }
 
-        public static DietPlan GetDietPlan()
+        public static DietPlan GetDietPlan(string planName)
         {
             //254 UserEmployee
-            var dietPlans = db.DietPlans.Select(p => new DietPlan() {DietPlanId = p.DietPlanId, Name = p.Name, FoodType = p.FoodType, FoodAmountInCups = p.FoodAmountInCups }).ToArray();
-            for (int i = 0; i < dietPlans.Count(); i++)
-            {
-                Console.WriteLine($"{i}. {dietPlans[i].Name}");
-            }
-            return dietPlans[int.Parse(Console.ReadLine())];
+            var dietPlan = db.DietPlans.Where(p => p.Name == planName).FirstOrDefault();
+            return dietPlan;
         }
 
         public static Adoption[] GetPendingAdoptions()
@@ -130,17 +125,9 @@ namespace HumaneSociety
         public static Species GetSpecies(string speciesGiven)
         {
             //247 UserEmployee
-            var species = db.Species.Select(s => new Species { SpeciesId = s.SpeciesId, Name = s.Name }).ToArray();
-            int indexChosen = 0;
-
-            for (int i = 0; i < species.Count(); i++)
-            {
-                if(species[i].Name == speciesGiven)
-                {
-                    indexChosen = i;
-                }
-            }
-            return species[indexChosen];
+            //var species = db.Species.Select(s => new Species { SpeciesId = s.SpeciesId, Name = s.Name }).ToArray();
+            var species = db.Species.Where(s => s.Name == speciesGiven).FirstOrDefault();
+            return species;
         }
 
         public static void RemoveAnimal(Animal animal)
