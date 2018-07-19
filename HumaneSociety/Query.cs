@@ -15,6 +15,7 @@ namespace HumaneSociety
         {
             //255 UserEmployee
             db.Animals.InsertOnSubmit(animal);
+            db.SubmitChanges();
         }
 
         public static void AddUsernameAndPassword(Employee employee)
@@ -23,6 +24,7 @@ namespace HumaneSociety
             var employeeToUpdate = db.Employees.Where(e => employee.EmployeeId == e.EmployeeId).Select(e => e).FirstOrDefault();
             employeeToUpdate.UserName = employee.UserName;
             employeeToUpdate.Password = employee.Password;
+            db.SubmitChanges();
         }
 
         public static bool CheckEmployeeUserNameExist(string username)
@@ -88,6 +90,7 @@ namespace HumaneSociety
                         //194 in Userinterfaces, 9 is the case for changing the animal id which sounds like a bad idea. Furthermore, in the calling method (UserEmployee 184), 9 represents the "finished" option. 
                         break;
                 }
+                db.SubmitChanges();
             }
         }
 
@@ -99,7 +102,6 @@ namespace HumaneSociety
             {
                 Console.WriteLine($"{i}. {dietPlans[i].Name}");
             }
-
             return dietPlans[int.Parse(Console.ReadLine())];
         }
 
@@ -142,7 +144,7 @@ namespace HumaneSociety
             //240 UserEmployee
             var animalToRemove = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Select(a => a).FirstOrDefault();
             db.Animals.DeleteOnSubmit(animalToRemove);
- 
+            db.SubmitChanges();
         }
         
         public static void UpdateAdoption(bool isApproved, Adoption adoption)
@@ -157,6 +159,7 @@ namespace HumaneSociety
             {
                 adoptionToUpdate.ApprovalStatus = "Not Approved";
             }
+            db.SubmitChanges();
         }
 
         public static void UpdateShot(string shotType, Animal animal)
@@ -164,6 +167,7 @@ namespace HumaneSociety
             //171, 178 UserEmployee
             AnimalShot newShot = new AnimalShot() { AnimalId = animal.AnimalId, DateReceived = DateTime.Today, ShotId = db.Shots.Where(s => s.Name == shotType).Select(s => s.ShotId).FirstOrDefault() };
             db.AnimalShots.InsertOnSubmit(newShot);
+            db.SubmitChanges();
         }
 
         public static Client GetClient(string username, string password)
