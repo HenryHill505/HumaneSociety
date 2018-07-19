@@ -145,9 +145,18 @@ namespace HumaneSociety
  
         }
         
-        public static void UpdateAdoption(bool GetBitData, Adoption adoption)
+        public static void UpdateAdoption(bool isApproved, Adoption adoption)
         {
             //89 & 93 in UserEmployee
+            var adoptionToUpdate = db.Adoptions.Where(a => a.AdoptionId == adoption.AdoptionId).Select(a => a).FirstOrDefault();
+            if (isApproved)
+            {
+                adoptionToUpdate.ApprovalStatus = "Approved";
+            }
+            else
+            {
+                adoptionToUpdate.ApprovalStatus = "Not Approved";
+            }
         }
 
         public static void UpdateShot(string shotType, Animal animal)
