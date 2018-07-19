@@ -90,7 +90,6 @@ namespace HumaneSociety
                 }
             }
             db.SubmitChanges();
-            //animal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
         }
 
         public static DietPlan GetDietPlan()
