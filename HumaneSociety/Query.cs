@@ -129,17 +129,9 @@ namespace HumaneSociety
         public static Species GetSpecies(string speciesGiven)
         {
             //247 UserEmployee
-            var species = db.Species.Select(s => new Species { SpeciesId = s.SpeciesId, Name = s.Name }).ToArray();
-            int indexChosen = 0;
-
-            for (int i = 0; i < species.Count(); i++)
-            {
-                if(species[i].Name == speciesGiven)
-                {
-                    indexChosen = i;
-                }
-            }
-            return species[indexChosen];
+            //var species = db.Species.Select(s => new Species { SpeciesId = s.SpeciesId, Name = s.Name }).ToArray();
+            var species = db.Species.Where(s => s.Name == speciesGiven).FirstOrDefault();
+            return species;
         }
 
         public static void RemoveAnimal(Animal animal)
