@@ -92,15 +92,11 @@ namespace HumaneSociety
             db.SubmitChanges();
         }
 
-        public static DietPlan GetDietPlan()
+        public static DietPlan GetDietPlan(string planName)
         {
             //254 UserEmployee
-            var dietPlans = db.DietPlans.Select(p => new DietPlan() {DietPlanId = p.DietPlanId, Name = p.Name, FoodType = p.FoodType, FoodAmountInCups = p.FoodAmountInCups }).ToArray();
-            for (int i = 0; i < dietPlans.Count(); i++)
-            {
-                Console.WriteLine($"{i}. {dietPlans[i].Name}");
-            }
-            return dietPlans[int.Parse(Console.ReadLine())];
+            var dietPlan = db.DietPlans.Where(p => p.Name == planName).FirstOrDefault();
+            return dietPlan;
         }
 
         public static Adoption[] GetPendingAdoptions()
