@@ -348,7 +348,22 @@ namespace HumaneSociety
         private Species CheckSpecies(string speciesName)
         {
             //Ask user if they want to add the species here
-            return Query.GetSpecies(speciesName) ?? CreateSpecies(speciesName);
+            //return Query.GetSpecies(speciesName) ?? CreateSpecies(speciesName);
+            Species species = Query.GetSpecies(speciesName);
+            if (species != null)
+            {
+                return species;
+            }
+
+            if (UserInterface.GetBitData($"{speciesName} was not found. Would you like to add it as a new species?"))
+            {
+                return CreateSpecies(speciesName);
+            }
+            else
+            {
+                return null;
+            }
+            
         }
 
         public Species CreateSpecies(string speciesName)
