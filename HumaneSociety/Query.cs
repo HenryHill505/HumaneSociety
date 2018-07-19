@@ -49,14 +49,46 @@ namespace HumaneSociety
         public static Employee EmployeeLogin(string userName, string password)
         {
             //267 UserEmployee
-            var employeeValues = db.Employees.Where(e => e.UserName == userName && e.Password == password).Select(e => new Employee { EmployeeId = e.EmployeeId, FirstName = e.FirstName, LastName = e.LastName, UserName = e.UserName, Password = e.Password, EmployeeNumber = e.EmployeeNumber, Email = e.Email }).First();
-            Employee employee = new Employee() { EmployeeId = employeeValues.EmployeeId, FirstName = employeeValues.FirstName, LastName = employeeValues.LastName, UserName = employeeValues.UserName, Password = employeeValues.Password, EmployeeNumber = employeeValues.EmployeeNumber, Email = employeeValues.Email };
+            var employee = db.Employees.Where(e => e.UserName == userName && e.Password == password).First();
             return employee;
         }
 
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
             //192 UserEmployee
+            var animalToUpdate = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Select(a => a).FirstOrDefault();
+
+            foreach (int key in updates.Keys)
+            {
+                switch (key)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        break;
+                    case 3:
+                        animalToUpdate.Name = updates[key];
+                        break;
+                    case 4:
+                        animalToUpdate.Age = int.Parse(updates[key]);
+                        break;
+                    case 5:
+                        animalToUpdate.Demeanor = updates[key];
+                        break;
+                    case 6:
+                        animalToUpdate.KidFriendly = bool.Parse(updates[key]);
+                        break;
+                    case 7:
+                        animalToUpdate.PetFriendly = bool.Parse(updates[key]);
+                        break;
+                    case 8:
+                        animalToUpdate.Weight = int.Parse(updates[key]);
+                        break;
+                    case 9:
+                        //194 in Userinterfaces, 9 is the case for changing the animal id which sounds like a bad idea. Furthermore, in the calling method (UserEmployee 184), 9 represents the "finished" option. 
+                        break;
+                }
+            }
         }
 
         public static DietPlan GetDietPlan()
@@ -113,18 +145,26 @@ namespace HumaneSociety
  
         }
         
-        public static void UpdateAdoption(bool GetBitData, Adoption adoption)
+        public static void UpdateAdoption(bool isApproved, Adoption adoption)
         {
             //89 & 93 in UserEmployee
+            var adoptionToUpdate = db.Adoptions.Where(a => a.AdoptionId == adoption.AdoptionId).Select(a => a).FirstOrDefault();
+            if (isApproved)
+            {
+                adoptionToUpdate.ApprovalStatus = "Approved";
+            }
+            else
+            {
+                adoptionToUpdate.ApprovalStatus = "Not Approved";
+            }
         }
 
         public static void UpdateShot(string shotType, Animal animal)
         {
             //171, 178 UserEmployee
-            
+            AnimalShot newShot = new AnimalShot() { AnimalId = animal.AnimalId, DateReceived = DateTime.Today, ShotId = db.Shots.Where(s => s.Name == shotType).Select(s => s.ShotId).FirstOrDefault() };
+            db.AnimalShots.InsertOnSubmit(newShot);
         }
-      
-
 
         public static Client GetClient(string username, string password)
         {
