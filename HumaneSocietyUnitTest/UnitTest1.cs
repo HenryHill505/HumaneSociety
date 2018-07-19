@@ -36,13 +36,13 @@ namespace HumaneSocietyUnitTest
         public void RetrieveEmployeeUser_EmployeeExists_ReturnEmployee()
         {
         //Arrange
-        string email = "";
-        int employeNumber = 0;
+        string email = "adam@test.com";
+        int employeeNumber = 1;
 
         //Act
-        Query.RetrieveEmployeeUser(email, employeNumber);
-        
-        //Assert
+        Employee employee =  Query.RetrieveEmployeeUser(email, employeeNumber);
+            //Assert
+            Assert.IsNotNull(employee);
         }
     }
 }
