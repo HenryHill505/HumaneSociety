@@ -85,12 +85,11 @@ namespace HumaneSociety
                         animalToUpdate.Weight = int.Parse(updates[key]);
                         break;
                     case 8:
-                        //194 in Userinterfaces, 9 is the case for changing the animal id which sounds like a bad idea. Furthermore, in the calling method (UserEmployee 184), 9 represents the "finished" option. 
                         animalToUpdate.AnimalId = int.Parse(updates[key]);
                         break;
                 }
-                db.SubmitChanges();
             }
+            db.SubmitChanges();
         }
 
         public static DietPlan GetDietPlan()
@@ -122,7 +121,8 @@ namespace HumaneSociety
         public static AnimalShot[] GetShots(Animal animal)
         {
             //Called 162 in UserEmployee. Yield Return?
-            var shots = db.AnimalShots.Join(db.Shots, a => a.ShotId, s => s.ShotId, (a, s) => new { AnimalId = a.AnimalId, ShotId = a.ShotId, Name = s.Name, DateReceived = a.DateReceived }).Where(a => animal.AnimalId == a.AnimalId).Select(a => new AnimalShot { AnimalId = a.AnimalId, ShotId = a.ShotId, DateReceived = a.DateReceived, Shot = new Shot() { ShotId = a.ShotId, Name = a.Name } }).ToArray();
+            //var shots = db.AnimalShots.Join(db.Shots, a => a.ShotId, s => s.ShotId, (a, s) => new { AnimalId = a.AnimalId, ShotId = a.ShotId, Name = s.Name, DateReceived = a.DateReceived }).Where(a => animal.AnimalId == a.AnimalId).Select(a => new AnimalShot { AnimalId = a.AnimalId, ShotId = a.ShotId, DateReceived = a.DateReceived, Shot = new Shot() { ShotId = a.ShotId, Name = a.Name } }).ToArray();
+            var shots = db.AnimalShots.Where(s => s.AnimalId == animal.AnimalId).ToArray();
             return shots;
         }
 
