@@ -10,15 +10,7 @@ namespace HumaneSociety
     {
         static void Main(string[] args)
         {
-            USState[] states = Query.GetStates();
-
-            foreach (var state in states)
-            {
-                Console.WriteLine(state.Abbreviation);
-            }
-
             PointOfEntry.Run();
-            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
         }
     }
 }

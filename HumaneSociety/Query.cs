@@ -48,8 +48,7 @@ namespace HumaneSociety
         public static Employee EmployeeLogin(string userName, string password)
         {
             //267 UserEmployee
-            var employeeValues = db.Employees.Where(e => e.UserName == userName && e.Password == password).Select(e => new Employee { EmployeeId = e.EmployeeId, FirstName = e.FirstName, LastName = e.LastName, UserName = e.UserName, Password = e.Password, EmployeeNumber = e.EmployeeNumber, Email = e.Email }).First();
-            Employee employee = new Employee() { EmployeeId = employeeValues.EmployeeId, FirstName = employeeValues.FirstName, LastName = employeeValues.LastName, UserName = employeeValues.UserName, Password = employeeValues.Password, EmployeeNumber = employeeValues.EmployeeNumber, Email = employeeValues.Email };
+            var employee = db.Employees.Where(e => e.UserName == userName && e.Password == password).First();
             return employee;
         }
 
