@@ -18,6 +18,12 @@ namespace HumaneSociety
             db.SubmitChanges();
         }
 
+        public static void AddSpecies(string speciesName)
+        {
+            Species species = new Species() { Name = speciesName };
+            db.Species.InsertOnSubmit(species);
+        }
+
         public static void AddUsernameAndPassword(Employee employee)
         {
             //308 UserEmployee
