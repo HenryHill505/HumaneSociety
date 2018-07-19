@@ -57,36 +57,36 @@ namespace HumaneSociety
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
             //192 UserEmployee
-            var animalToUpdate = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Select(a => a).FirstOrDefault();
+            var animalToUpdate = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
 
             foreach (int key in updates.Keys)
             {
                 switch (key)
                 {
                     case 1:
+                        animalToUpdate.SpeciesId = db.Species.Where(s => s.Name == updates[key]).Select(s => s.SpeciesId).FirstOrDefault();
                         break;
                     case 2:
-                        break;
-                    case 3:
                         animalToUpdate.Name = updates[key];
                         break;
-                    case 4:
+                    case 3:
                         animalToUpdate.Age = int.Parse(updates[key]);
                         break;
-                    case 5:
+                    case 4:
                         animalToUpdate.Demeanor = updates[key];
                         break;
-                    case 6:
+                    case 5:
                         animalToUpdate.KidFriendly = bool.Parse(updates[key]);
                         break;
-                    case 7:
+                    case 6:
                         animalToUpdate.PetFriendly = bool.Parse(updates[key]);
                         break;
-                    case 8:
+                    case 7:
                         animalToUpdate.Weight = int.Parse(updates[key]);
                         break;
-                    case 9:
+                    case 8:
                         //194 in Userinterfaces, 9 is the case for changing the animal id which sounds like a bad idea. Furthermore, in the calling method (UserEmployee 184), 9 represents the "finished" option. 
+                        animalToUpdate.AnimalId = int.Parse(updates[key]);
                         break;
                 }
                 db.SubmitChanges();
