@@ -423,10 +423,7 @@ namespace HumaneSociety
 
         public DietPlan CreateDietPlan(string dietPlanName, string foodType, int foodAmountInCups)
         {
-            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
-            
             Query.AddDietPlan(dietPlanName, foodType, foodAmountInCups);
-            db.SubmitChanges();
             return Query.GetDietPlan(dietPlanName);
         }
     }
