@@ -16,21 +16,25 @@ INSERT INTO Animals VALUES('Polly', 3, 8, 18, 3, 'Aggressive', 0, 0, 'Female', '
 INSERT INTO Animals VALUES('Johannes', 4, 10, 2, 4, 'Neutral', 0, 1, 'Male', 'Unadopted', NULL);
 INSERT INTO Animals VALUES('Peter', 5, 5, 1, 5, 'Friendly', 1, 1, 'Male', 'Unadopted', NULL);
 
-INSERT INTO Rooms VALUES(1);
-INSERT INTO Rooms VALUES(2);
-INSERT INTO Rooms VALUES(3);
-INSERT INTO Rooms VALUES(4);
-INSERT INTO Rooms VALUES(5);
-INSERT INTO Rooms VALUES(NULL);
-INSERT INTO Rooms VALUES(NULL);
-INSERT INTO Rooms VALUES(NULL);
-INSERT INTO Rooms VALUES(NULL);
-INSERT INTO Rooms VALUES(NULL);
+ALTER TABLE Rooms ADD RoomNumber INTEGER;
+ALTER TABLE Rooms ADD AnimalName VARCHAR(50);
+
+INSERT INTO Rooms VALUES(1, 101, 'Milla');
+INSERT INTO Rooms VALUES(2, 102, 'Rhea');
+INSERT INTO Rooms VALUES(3, 103, 'Polly');
+INSERT INTO Rooms VALUES(4, 104, 'Johannes');
+INSERT INTO Rooms VALUES(5, 105, 'Peter');
+INSERT INTO Rooms VALUES(NULL, 106, NULL);
+INSERT INTO Rooms VALUES(NULL, 107, NULL);
+INSERT INTO Rooms VALUES(NULL, 108, NULL);
+INSERT INTO Rooms VALUES(NULL, 109, NULL);
+INSERT INTO Rooms VALUES(NULL, 110, NULL);
 
 INSERT INTO Employees VALUES('Zack','Scherrer','zscherrer','password',1,'zscherrer@carthage.edu');
 
 INSERT INTO Addresses VALUES ('3720 Forest Heights Dr.', NULL, 54701, 1);
 INSERT INTO Clients VALUES('Zack','Scherrer','a','a',1,'zscherrer@carthage.edu', 50000, 0, 1);
+
 INSERT INTO Shots VALUES('Rabies');
 INSERT INTO Shots VALUES('Tetanus');
 INSERT INTO Shots VALUES('Bird Flu');

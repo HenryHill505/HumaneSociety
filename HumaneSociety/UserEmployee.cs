@@ -26,7 +26,7 @@ namespace HumaneSociety
         }
         protected override void RunUserMenus()
         {
-            List<string> options = new List<string>() { "What would you like to do? (select number of choice)", "1. Add animal", "2. Remove Anmial", "3. Check Animal Status",  "4. Approve Adoption", "5. Check Balance of Cash Register" };
+            List<string> options = new List<string>() { "What would you like to do? (select number of choice)", "1. Add animal", "2. Remove Anmial", "3. Check Animal Status",  "4. Approve Adoption", "5. Check Balance of Cash Register", "6. Change Animal Rooms" };
             UserInterface.DisplayUserOptions(options);
             string input = UserInterface.GetUserInput();
             RunUserInput(input);
@@ -56,11 +56,43 @@ namespace HumaneSociety
                     UserInterface.DisplayUserOptions("Current Balance: $" + UserInterface.money + "\n");
                     RunUserMenus();
                     return;
+                case "6":
+                    SwitchRooms();
+                    RunUserMenus();
+                    return;
                 default:
                     UserInterface.DisplayUserOptions("Input not accepted please try again");
                     RunUserMenus();
                     return;
             }
+        }
+
+        private void SwitchRooms()
+        {
+            Console.Clear();
+            Animal animalToMove = new Animal();
+            Room destination = new Room();
+            string input = UserInterface.GetStringData("ID", "the animal you want to move's");
+            bool isParsable = int.TryParse(input, out int animalId);
+            if (isParsable)
+            {
+                animalToMove = Query.GetAnimalByID(animalId);
+            }
+            input = UserInterface.GetStringData("ID of the room you want to move the animal to", "the");
+            isParsable = int.TryParse(input, out int roomId);
+            if (isParsable)
+            {
+                destination = Query.GetRoomByID(roomId);
+            }
+            if(destination.AnimalName != null)
+            {
+                UserInterface.DisplayUserOptions("The room you want to move the animal to is full. Would you like the animals to exchange rooms?");
+                if ((bool)!UserInterface.GetBitData())
+                {
+                    return;
+                }
+            }
+            Query.UpdateRoom(destination, animalToMove);
         }
 
         private void CheckAdoptions()

@@ -114,6 +114,24 @@ namespace HumaneSociety
             return room;
         }
 
+        public static void UpdateRoom(Room room, Animal animal)
+        {
+            var query = db.Rooms.Where(r => r.RoomId == room.RoomId);
+
+            foreach (var item in query)
+            {
+                Room previousRoom = db.Rooms.Where(r => r.AnimalId == animal.AnimalId).FirstOrDefault();
+                string temporary = item.AnimalName;
+                int? temporaryId = item.AnimalId;
+                item.AnimalName = animal.Name;
+                item.AnimalId = animal.AnimalId;
+                previousRoom.AnimalName = temporary;
+                previousRoom.AnimalId = temporaryId;
+            }
+
+            db.SubmitChanges();
+        }
+
         public static AnimalShot[] GetShots(Animal animal)
         {
             //Called 162 in UserEmployee. Yield Return?
@@ -194,6 +212,18 @@ namespace HumaneSociety
             return new Animal();
         }
 
+        public static Room GetRoomByID(int id)
+        {
+            var query = db.Rooms.Where(r => r.RoomId == id);
+
+            foreach(var room in query)
+            {
+                return room;
+            }
+
+            return new Room();
+        }
+
         public static void Adopt(Animal animal, Client client)
         {
             var clientQuery = db.Clients.Where(c => c.ClientId == client.ClientId);
@@ -230,20 +260,25 @@ namespace HumaneSociety
             return query;
         }
 
-        public static void AddNewClient(string firstName, string lastName, string username, string password, string email, string streetAddress, int zipCode, int state)
+        public static void AddNewClient(Client client, string firstName, string lastName, string username, string password, string email, string streetAddress, int zipCode, int state)
         {
-            Client client = new Client();
             client.FirstName = firstName;
             client.LastName = lastName;
             client.UserName = username;
             client.Password = password;
             client.Email = email;
-            client.Address.AddressLine1 = streetAddress;
-            client.Address.Zipcode = zipCode;
-            client.Address.USStateId = state;
+
+            Address clientAddress = new Address();
+            clientAddress.AddressLine1 = streetAddress;
+            clientAddress.Zipcode = zipCode;
+            clientAddress.USStateId = state;
+
+            db.Addresses.InsertOnSubmit(clientAddress);
+            //db.SubmitChanges();
+
+            client.AddressId = db.Addresses.OrderByDescending(a => a.AddressId).First().AddressId;
 
             db.Clients.InsertOnSubmit(client);
-
             db.SubmitChanges();
 
         }
@@ -405,7 +440,7 @@ namespace HumaneSociety
 
         public static void ImportAnimalsFromCSV(string filename)
         {
-            var query = File.ReadAllLines(filename).Select(l => l.Split(',').Where(m => m != null));
+            var query = File.ReadAllLines("..\\..\\..\\" + filename).Select(l => l.Split(',').Where(m => m != null));
             
             foreach (var animal in query)
             {
@@ -418,6 +453,14 @@ namespace HumaneSociety
                     if (isParsable)
                     {
                         intData.Add(value);
+                    }
+                    else if (data == " null" && intData.Count >= 8)
+                    {
+                        stringData.Add(null);
+                    }
+                    else if (data == " null")
+                    {
+                        intData.Add(null);
                     }
                     else
                     {

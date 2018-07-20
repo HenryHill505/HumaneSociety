@@ -10,10 +10,10 @@ namespace HumaneSociety
     {
         static void Main(string[] args)
         {
-            //string filename = "HumaneSocietyAnimals.csv";
+            //string filename = "animals.csv";
 
             //Query.ImportAnimalsFromCSV(filename);
-            
+
             PointOfEntry.Run();
         }
     }

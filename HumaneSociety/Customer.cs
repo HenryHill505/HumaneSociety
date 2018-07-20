@@ -9,6 +9,11 @@ namespace HumaneSociety
     class Customer : User
     {
         Client client;
+
+        public Customer()
+        {
+            client = new Client();
+        }
         public override void LogIn()
         {
             if (CheckIfNewUser())
@@ -249,12 +254,12 @@ namespace HumaneSociety
                 int state = GetState();
                 UserInterface.DisplayUserOptions("Please enter your street address");
                 string streetAddress = UserInterface.GetUserInput();
-                Query.AddNewClient(firstName, lastName, username, password, email, streetAddress, zipCode, state);
+                Query.AddNewClient(client, firstName, lastName, username, password, email, streetAddress, zipCode, state);
                 Console.Clear();
                 UserInterface.DisplayUserOptions("Profile successfully added");
                 return true;
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }
@@ -292,7 +297,7 @@ namespace HumaneSociety
                     int state = GetState();
                     UserInterface.DisplayUserOptions("Please enter your street address");
                     string streetAddress = UserInterface.GetUserInput();
-                    Query.AddNewClient(firstName, lastName, username, password, email, streetAddress, zipCode, state);
+                    Query.AddNewClient(client, firstName, lastName, username, password, email, streetAddress, zipCode, state);
                     Console.Clear();
                     UserInterface.DisplayUserOptions("Profile successfully added");
 
