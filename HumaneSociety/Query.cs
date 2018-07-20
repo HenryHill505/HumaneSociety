@@ -99,6 +99,13 @@ namespace HumaneSociety
             db.SubmitChanges();
         }
 
+        public static void AddDietPlan(string planName, string foodType, int foodAmountInCups)
+        {
+            DietPlan dietPlan = new DietPlan() { Name = planName, FoodType = foodType, FoodAmountInCups = foodAmountInCups };
+            db.DietPlans.InsertOnSubmit(dietPlan);
+            db.SubmitChanges();
+        }
+
         public static DietPlan GetDietPlan(string planName)
         {
             //254 UserEmployee
@@ -117,7 +124,7 @@ namespace HumaneSociety
         public static Room GetRoom(int animalID)
         {
             //133 UserInterface
-            var room = db.Rooms.Where(r => r.AnimalId == animalID).First();
+            var room = db.Rooms.Where(r => r.AnimalId == animalID).FirstOrDefault();
             return room;
         }
 

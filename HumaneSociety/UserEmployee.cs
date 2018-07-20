@@ -293,7 +293,10 @@ namespace HumaneSociety
             Console.Clear();
             Animal animal = new Animal();
             string species = UserInterface.GetStringData("species", "the animal's");
-            animal.Species = CheckSpecies(species);
+            var tempSpecies = CheckSpecies(species);
+            //animal.Species = CheckSpecies(species);
+            //animal.DietPlan = Query.GetDietPlan(dietPlan); 
+            //animal.DietPlan = CheckDietPlan(dietPlan);
             animal.Name = UserInterface.GetStringData("name", "the animal's");
             animal.Age = UserInterface.GetIntegerData("age", "the animal's");
             animal.Demeanor = UserInterface.GetStringData("demeanor", "the animal's");
@@ -301,7 +304,9 @@ namespace HumaneSociety
             animal.PetFriendly = UserInterface.GetBitData("the animal", "pet friendly");
             animal.Weight = UserInterface.GetIntegerData("the animal", "the weight of the");
             string dietPlan = UserInterface.GetStringData("diet plan", "the animal's");
-            animal.DietPlan = Query.GetDietPlan(dietPlan);
+            var tempDiet = CheckDietPlan(dietPlan);
+            animal.DietPlan = tempDiet;
+            animal.Species = tempSpecies;
             Query.AddAnimal(animal);
         }
         protected override void LogInPreExistingUser()
@@ -398,13 +403,35 @@ namespace HumaneSociety
             {
                 return null;
             }
-            
         }
 
         public Species CreateSpecies(string speciesName)
         {
             Query.AddSpecies(speciesName);
             return Query.GetSpecies(speciesName);
+        }
+
+        public DietPlan CheckDietPlan(string dietPlanName)
+        {
+            DietPlan dietPlan = Query.GetDietPlan(dietPlanName);
+            if (dietPlan != null) { return dietPlan; }
+            if (UserInterface.GetBitData($"{dietPlanName} was was not found. Would you like to add it as a new diet plan?"))
+            {
+                return CreateDietPlan(dietPlanName, UserInterface.GetStringData("food type", "this plan's"), UserInterface.GetIntegerData("food amount in cups", "this plan's"));
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public DietPlan CreateDietPlan(string dietPlanName, string foodType, int foodAmountInCups)
+        {
+            HumaneSocietyDataContext db = new HumaneSocietyDataContext();
+            
+            Query.AddDietPlan(dietPlanName, foodType, foodAmountInCups);
+            db.SubmitChanges();
+            return Query.GetDietPlan(dietPlanName);
         }
     }
 }
