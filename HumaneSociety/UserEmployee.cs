@@ -220,7 +220,6 @@ namespace HumaneSociety
                     Query.UpdateShot("booster", animal);
                 }
             }
-            
         }
 
         private void UpdateAnimal(Animal animal)
@@ -295,8 +294,6 @@ namespace HumaneSociety
             string species = UserInterface.GetStringData("species", "the animal's");
             var tempSpecies = CheckSpecies(species);
             //animal.Species = CheckSpecies(species);
-            //animal.DietPlan = Query.GetDietPlan(dietPlan); 
-            //animal.DietPlan = CheckDietPlan(dietPlan);
             animal.Name = UserInterface.GetStringData("name", "the animal's");
             animal.Age = UserInterface.GetIntegerData("age", "the animal's");
             animal.Demeanor = UserInterface.GetStringData("demeanor", "the animal's");
@@ -306,6 +303,7 @@ namespace HumaneSociety
             string dietPlan = UserInterface.GetStringData("diet plan", "the animal's");
             var tempDiet = CheckDietPlan(dietPlan);
             animal.DietPlan = tempDiet;
+            //animal.DietPlan = CheckDietPlan(dietPlan);
             animal.Species = tempSpecies;
             Query.AddAnimal(animal);
         }
@@ -387,8 +385,6 @@ namespace HumaneSociety
 
         private Species CheckSpecies(string speciesName)
         {
-            //Ask user if they want to add the species here
-            //return Query.GetSpecies(speciesName) ?? CreateSpecies(speciesName);
             Species species = Query.GetSpecies(speciesName);
             if (species != null)
             {
