@@ -23,7 +23,7 @@ namespace HumaneSocietyUnitTest
         public void CheckEmployeeUserNameExists_UsernameDoesExist_ReturnTrue()
         {
             //Arrange
-            string testname = "";
+            string testname = "adam1";
             bool result;
             //Act
             result = Query.CheckEmployeeUserNameExist(testname);
