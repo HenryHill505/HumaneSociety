@@ -93,6 +93,9 @@ namespace HumaneSociety
                 }
             }
             Query.UpdateRoom(destination, animalToMove);
+            UserInterface.DisplayUserOptions("Animal(s) successfully moved.");
+            Console.ReadLine();
+            Console.Clear();
         }
 
         private void CheckAdoptions()
