@@ -53,14 +53,12 @@ namespace HumaneSociety
 
         public static Employee EmployeeLogin(string userName, string password)
         {
-            //267 UserEmployee
             var employee = db.Employees.Where(e => e.UserName == userName && e.Password == password).First();
             return employee;
         }
 
         public static void EnterUpdate(Animal animal, Dictionary<int, string> updates)
         {
-            //192 UserEmployee
             var animalToUpdate = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
 
             foreach (int key in updates.Keys)
@@ -105,22 +103,18 @@ namespace HumaneSociety
 
         public static DietPlan GetDietPlan(string planName)
         {
-            //254 UserEmployee
             var dietPlan = db.DietPlans.Where(p => p.Name == planName).FirstOrDefault();
             return dietPlan;
         }
 
         public static Adoption[] GetPendingAdoptions()
         {
-            //Line 66 in UserEmployee calls .ToList() on the return value of this method. Should we use yield return?
-
             var pendingAdoptions = db.Adoptions.Where(a => a.ApprovalStatus == "Pending").ToArray();
             return pendingAdoptions;
         }
 
         public static Room GetRoom(int animalID)
         {
-            //133 UserInterface
             var room = db.Rooms.Where(r => r.AnimalId == animalID).FirstOrDefault();
             return room;
         }
@@ -145,23 +139,18 @@ namespace HumaneSociety
 
         public static AnimalShot[] GetShots(Animal animal)
         {
-            //Called 162 in UserEmployee. Yield Return?
-            //var shots = db.AnimalShots.Join(db.Shots, a => a.ShotId, s => s.ShotId, (a, s) => new { AnimalId = a.AnimalId, ShotId = a.ShotId, Name = s.Name, DateReceived = a.DateReceived }).Where(a => animal.AnimalId == a.AnimalId).Select(a => new AnimalShot { AnimalId = a.AnimalId, ShotId = a.ShotId, DateReceived = a.DateReceived, Shot = new Shot() { ShotId = a.ShotId, Name = a.Name } }).ToArray();
             var shots = db.AnimalShots.Where(s => s.AnimalId == animal.AnimalId).ToArray();
             return shots;
         }
 
         public static Species GetSpecies(string speciesGiven)
         {
-            //247 UserEmployee
-            //var species = db.Species.Select(s => new Species { SpeciesId = s.SpeciesId, Name = s.Name }).ToArray();
             var species = db.Species.Where(s => s.Name == speciesGiven).FirstOrDefault();
             return species;
         }
 
         public static void RemoveAnimal(Animal animal)
         {
-            //240 UserEmployee
             var animalToRemove = db.Animals.Where(a => a.AnimalId == animal.AnimalId).Select(a => a).FirstOrDefault();
             db.Animals.DeleteOnSubmit(animalToRemove);
             db.SubmitChanges();
@@ -169,7 +158,6 @@ namespace HumaneSociety
         
         public static void UpdateAdoption(bool isApproved, Adoption adoption)
         {
-            //89 & 93 in UserEmployee
             var adoptionToUpdate = db.Adoptions.Where(a => a.AdoptionId == adoption.AdoptionId).Select(a => a).FirstOrDefault();
             if (isApproved)
             {
@@ -186,8 +174,6 @@ namespace HumaneSociety
 
         public static void UpdateShot(string shotType, Animal animal)
         {
-            //171, 178 UserEmployee
-            //AnimalShot newShot = new AnimalShot() { AnimalId = animal.AnimalId, DateReceived = DateTime.Today, ShotId = db.Shots.Where(s => s.Name == shotType).Select(s => s.ShotId).FirstOrDefault() };
             AnimalShot newShot = new AnimalShot();
             newShot.Animal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
             newShot.Shot = db.Shots.Where(s => s.Name == shotType).FirstOrDefault();
@@ -269,7 +255,6 @@ namespace HumaneSociety
 
         public static USState[] GetStates()
         {
-            // HumaneSocietyDataContext db = new HumaneSocietyDataContext();
             var query = db.USStates.ToArray();
             
             return query;
@@ -289,7 +274,6 @@ namespace HumaneSociety
             clientAddress.USStateId = state;
 
             db.Addresses.InsertOnSubmit(clientAddress);
-            //db.SubmitChanges();
 
             client.AddressId = db.Addresses.OrderByDescending(a => a.AddressId).First().AddressId;
 
