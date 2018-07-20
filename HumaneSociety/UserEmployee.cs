@@ -363,7 +363,6 @@ namespace HumaneSociety
             {
                 return null;
             }
-            
         }
 
         public Species CreateSpecies(string speciesName)

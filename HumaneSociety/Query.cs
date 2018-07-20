@@ -117,7 +117,7 @@ namespace HumaneSociety
         public static Room GetRoom(int animalID)
         {
             //133 UserInterface
-            var room = db.Rooms.Where(r => r.AnimalId == animalID).First();
+            var room = db.Rooms.Where(r => r.AnimalId == animalID).FirstOrDefault();
             return room;
         }
 
