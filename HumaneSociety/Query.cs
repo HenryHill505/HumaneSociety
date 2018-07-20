@@ -190,7 +190,10 @@ namespace HumaneSociety
         public static void UpdateShot(string shotType, Animal animal)
         {
             //171, 178 UserEmployee
-            AnimalShot newShot = new AnimalShot() { AnimalId = animal.AnimalId, DateReceived = DateTime.Today, ShotId = db.Shots.Where(s => s.Name == shotType).Select(s => s.ShotId).FirstOrDefault() };
+            //AnimalShot newShot = new AnimalShot() { AnimalId = animal.AnimalId, DateReceived = DateTime.Today, ShotId = db.Shots.Where(s => s.Name == shotType).Select(s => s.ShotId).FirstOrDefault() };
+            AnimalShot newShot = new AnimalShot();
+            newShot.Animal = animal;
+            newShot.Shot = db.Shots.Where(s => s.Name == shotType).FirstOrDefault();
             db.AnimalShots.InsertOnSubmit(newShot);
             db.SubmitChanges();
         }
