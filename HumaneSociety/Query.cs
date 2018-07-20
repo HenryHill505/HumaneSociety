@@ -192,8 +192,9 @@ namespace HumaneSociety
             //171, 178 UserEmployee
             //AnimalShot newShot = new AnimalShot() { AnimalId = animal.AnimalId, DateReceived = DateTime.Today, ShotId = db.Shots.Where(s => s.Name == shotType).Select(s => s.ShotId).FirstOrDefault() };
             AnimalShot newShot = new AnimalShot();
-            newShot.Animal = animal;
+            newShot.Animal = db.Animals.Where(a => a.AnimalId == animal.AnimalId).FirstOrDefault();
             newShot.Shot = db.Shots.Where(s => s.Name == shotType).FirstOrDefault();
+            newShot.DateReceived = DateTime.Today;
             db.AnimalShots.InsertOnSubmit(newShot);
             db.SubmitChanges();
         }
