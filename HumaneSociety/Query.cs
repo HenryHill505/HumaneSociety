@@ -13,7 +13,6 @@ namespace HumaneSociety
 
         public static void AddAnimal(Animal animal)
         {
-            //255 UserEmployee
             db.Animals.InsertOnSubmit(animal);
             db.SubmitChanges();
         }
@@ -27,7 +26,6 @@ namespace HumaneSociety
 
         public static void AddUsernameAndPassword(Employee employee)
         {
-            //308 UserEmployee
             var employeeToUpdate = db.Employees.Where(e => employee.EmployeeId == e.EmployeeId).Select(e => e).FirstOrDefault();
             employeeToUpdate.UserName = employee.UserName;
             employeeToUpdate.Password = employee.Password;
@@ -49,7 +47,6 @@ namespace HumaneSociety
 
         public static Employee RetrieveEmployeeUser(string email, int employeeNumber)
         {
-            //285 UserEmployee
             var employee = db.Employees.Where(e => e.Email == email && e.EmployeeNumber == employeeNumber).FirstOrDefault();
             return employee;
         }
