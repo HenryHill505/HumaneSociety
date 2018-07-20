@@ -266,7 +266,7 @@ namespace HumaneSociety
             animal.PetFriendly = UserInterface.GetBitData("the animal", "pet friendly");
             animal.Weight = UserInterface.GetIntegerData("the animal", "the weight of the");
             string dietPlan = UserInterface.GetStringData("diet plan", "the animal's");
-            animal.DietPlan = Query.GetDietPlan(dietPlan);
+            animal.DietPlan = Query.GetDietPlan(dietPlan); //animal.DietPlan = CheckDietPlan(dietPlan);
             Query.AddAnimal(animal);
         }
         protected override void LogInPreExistingUser()
@@ -369,6 +369,27 @@ namespace HumaneSociety
         {
             Query.AddSpecies(speciesName);
             return Query.GetSpecies(speciesName);
+        }
+
+        public DietPlan CheckDietPlan(string dietPlanName)
+        {
+            DietPlan dietPlan = Query.GetDietPlan(dietPlanName);
+            if (dietPlan != null) { return dietPlan; }
+
+            if (UserInterface.GetBitData($"{dietPlanName} was was not found. Would you like to add it as a new diet plan?"))
+            {
+                return CreateDietPlan(dietPlanName, UserInterface.GetStringData("food type", "this plan's"), UserInterface.GetIntegerData("food amount in cups", "this plan's"));
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public DietPlan CreateDietPlan(string dietPlanName, string foodType, int foodAmountInCups)
+        {
+            Query.AddDietPlan(dietPlanName, foodType, foodAmountInCups);
+            return Query.GetDietPlan(dietPlanName);
         }
     }
 }
